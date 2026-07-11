@@ -60,3 +60,13 @@ module "autoscaling" {
   desired_capacity = 2
   maximum_capacity = 4
 }
+
+module "monitoring" {
+  source = "../../modules/monitoring"
+
+  project_name             = "enterprise-platform-engineering"
+  environment              = "dev"
+  load_balancer_arn_suffix = module.load_balancer.alb_arn_suffix
+  target_group_arn_suffix  = module.load_balancer.target_group_arn_suffix
+  autoscaling_group_name   = module.autoscaling.autoscaling_group_name
+}

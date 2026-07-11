@@ -42,3 +42,23 @@ output "application_url" {
 output "application_autoscaling_group_name" {
   value = module.autoscaling.autoscaling_group_name
 }
+
+output "alb_arn_suffix" {
+  value = module.load_balancer.alb_arn_suffix
+}
+
+output "target_group_arn_suffix" {
+  value = module.load_balancer.target_group_arn_suffix
+}
+
+output "cloudwatch_dashboard_name" {
+  value = module.monitoring.dashboard_name
+}
+
+output "unhealthy_target_alarm_name" {
+  value = module.monitoring.unhealthy_target_alarm_name
+}
+
+output "asg_capacity_alarm_name" {
+  value = module.monitoring.asg_capacity_alarm_name
+}
