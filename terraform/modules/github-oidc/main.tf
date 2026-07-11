@@ -97,7 +97,8 @@ data "aws_iam_policy_document" "terraform_plan" {
       "cloudwatch:ListDashboards",
       "cloudwatch:ListMetrics",
       "cloudwatch:GetMetricData",
-      "cloudwatch:GetMetricStatistics"
+      "cloudwatch:GetMetricStatistics",
+      "cloudwatch:ListTagsForResource"
     ]
 
     resources = ["*"]
