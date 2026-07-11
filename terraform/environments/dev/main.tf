@@ -26,3 +26,37 @@ module "vpc" {
     "10.0.22.0/24"
   ]
 }
+
+module "compute" {
+  source = "../../modules/compute"
+
+  project_name      = "enterprise-platform-engineering"
+  environment       = "dev"
+  instance_type     = "t3.micro"
+  security_group_id = module.vpc.app_security_group_id
+}
+
+module "load_balancer" {
+  source = "../../modules/load-balancer"
+
+  project_name          = "enterprise-platform-engineering"
+  environment           = "dev"
+  vpc_id                = module.vpc.vpc_id
+  public_subnet_ids     = module.vpc.public_subnet_ids
+  alb_security_group_id = module.vpc.alb_security_group_id
+  application_port      = 8080
+}
+
+module "autoscaling" {
+  source = "../../modules/autoscaling"
+
+  project_name       = "enterprise-platform-engineering"
+  environment        = "dev"
+  launch_template_id = module.compute.launch_template_id
+  subnet_ids         = module.vpc.private_app_subnet_ids
+  target_group_arns  = [module.load_balancer.target_group_arn]
+
+  minimum_capacity = 2
+  desired_capacity = 2
+  maximum_capacity = 4
+}
