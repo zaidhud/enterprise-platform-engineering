@@ -15,10 +15,11 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   terraform-checks:
-    name: Format and Validate
+    name: Format, Validate and Plan
     runs-on: ubuntu-latest
 
     defaults:
@@ -34,11 +35,20 @@ jobs:
         with:
           terraform_version: "1.13.5"
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::874456855495:role/github-actions-terraform-plan
+          aws-region: eu-west-2
+
       - name: Terraform format check
         run: terraform fmt -check -recursive ../..
 
-      - name: Terraform initialise without backend
-        run: terraform init -backend=false
+      - name: Terraform initialise
+        run: terraform init
 
       - name: Terraform validate
         run: terraform validate
+
+      - name: Terraform plan
+        run: terraform plan -no-color

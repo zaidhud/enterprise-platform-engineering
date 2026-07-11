@@ -61,3 +61,13 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
   tags = local.common_tags
 }
+
+module "github_oidc" {
+  source = "../modules/github-oidc"
+
+  github_owner      = "zaidhud"
+  github_repository = "enterprise-platform-engineering"
+
+  terraform_state_bucket_arn = aws_s3_bucket.terraform_state.arn
+  terraform_lock_table_arn   = aws_dynamodb_table.terraform_locks.arn
+}
