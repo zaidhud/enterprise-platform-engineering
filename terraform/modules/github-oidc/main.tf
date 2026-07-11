@@ -81,15 +81,24 @@ data "aws_iam_policy_document" "terraform_plan" {
   statement {
     sid = "TerraformPlanReadOnly"
 
-    actions = [
-      "ec2:Describe*",
-      "elasticloadbalancing:Describe*",
-      "autoscaling:Describe*",
-      "iam:Get*",
-      "iam:List*",
-      "ssm:GetParameter",
-      "ssm:GetParameters"
-    ]
+  actions = [
+  "ssm:GetParameters",
+  "ssm:GetParameter",
+
+  "iam:List*",
+  "iam:Get*",
+
+  "elasticloadbalancing:Describe*",
+  "ec2:Describe*",
+  "autoscaling:Describe*",
+
+  "cloudwatch:DescribeAlarms",
+  "cloudwatch:GetDashboard",
+  "cloudwatch:ListDashboards",
+  "cloudwatch:ListMetrics",
+  "cloudwatch:GetMetricData",
+  "cloudwatch:GetMetricStatistics"
+]
 
     resources = ["*"]
   }
