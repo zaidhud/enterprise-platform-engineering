@@ -6,17 +6,17 @@ resource "aws_autoscaling_group" "application" {
   max_size         = var.maximum_capacity
 
   enabled_metrics = [
-  "GroupMinSize",
-  "GroupMaxSize",
-  "GroupDesiredCapacity",
-  "GroupInServiceInstances",
-  "GroupPendingInstances",
-  "GroupStandbyInstances",
-  "GroupTerminatingInstances",
-  "GroupTotalInstances"
-]
+    "GroupMinSize",
+    "GroupMaxSize",
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances",
+    "GroupPendingInstances",
+    "GroupStandbyInstances",
+    "GroupTerminatingInstances",
+    "GroupTotalInstances"
+  ]
 
-metrics_granularity = "1Minute"
+  metrics_granularity = "1Minute"
 
   vpc_zone_identifier = var.subnet_ids
   target_group_arns   = var.target_group_arns
